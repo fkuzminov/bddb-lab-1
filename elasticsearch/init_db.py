@@ -17,12 +17,9 @@ if __name__ == "__main__":
         verify_certs=False,
         ssl_show_warn=False,
     )
-    print(esearch.info())
     while not esearch.ping():
         print("Waiting for Elasticsearch to be available...")
         time.sleep(2)
-
-    print("Elasticsearch is available.")
 
     index_name = "finance"
     if not esearch.indices.exists(index=index_name):
@@ -92,4 +89,3 @@ if __name__ == "__main__":
         trns.append(doc)
 
     bulk(esearch, ({'_index': index_name, '_source': doc} for doc in trns))
-    print("Data ingestion completed.")

@@ -1,5 +1,5 @@
 {
   "query": {
-    "match": {"branch": "Ahaus North branch"}
+    "match": {"branch": "Amberg Central branch"}
   }
 }
