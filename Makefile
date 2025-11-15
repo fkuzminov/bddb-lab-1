@@ -1,4 +1,4 @@
-.PHONY: run-pg stop-pg run-mongo stop-mongo run-neo4j stop-neo4j
+.PHONY: run-pg stop-pg run-mongo stop-mongo run-neo4j stop-neo4j init-spark clean-spark
 
 run-pg:
 	@echo "Stopping existing container if running..."
@@ -63,3 +63,15 @@ stop-neo4j:
 	@echo "Stopping Neo4j container..."
 	@docker stop study_neo4j 2>/dev/null || true
 	@echo "Container stopped."
+
+init-spark:
+	@echo "Generating Parquet data files..."
+	@cd spark && python3 init_db.py
+	@echo "Converting to Delta Lake tables..."
+	@cd spark && python3 init_spark.py
+	@echo "Done! Spark data is ready."
+
+clean-spark:
+	@echo "Cleaning Spark data..."
+	@rm -rf spark/data spark/delta
+	@echo "Spark data cleaned."

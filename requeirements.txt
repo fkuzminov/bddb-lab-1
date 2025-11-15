@@ -9,3 +9,7 @@ pymongo==4.15.4
 
 # neo4j
 neo4j==6.0.3
+
+# Spark
+delta-spark==4.0.0
+pyspark==4.0.1
