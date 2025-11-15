@@ -1,0 +1,32 @@
+{
+  "size": 0,
+  "aggs": {
+    "by_customer": {
+      "terms": {
+        "field": "customer_id",
+        "size": 100
+      },
+      "aggs": {
+        "loan_count": {
+          "cardinality": {
+            "field": "loan_id"
+          }
+        },
+        "multiple_loans": {
+          "bucket_selector": {
+            "buckets_path": {
+              "count": "loan_count"
+            },
+            "script": "params.count > 1"
+          }
+        },
+        "customer_name": {
+          "top_hits": {
+            "size": 1,
+            "_source": ["customer_name"]
+          }
+        }
+      }
+    }
+  }
+}

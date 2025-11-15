@@ -1,0 +1,31 @@
+{
+  "size": 0,
+  "aggs": {
+    "customers": {
+      "terms": {
+        "field": "customer_id",
+        "size": 100
+      },
+      "aggs": {
+        "transactions_sequence": {
+          "top_hits": {
+            "sort": [
+              {
+                "transaction_date": {
+                  "order": "asc"
+                }
+              }
+            ],
+            "_source": ["transaction_id", "transaction_date", "amount"],
+            "size": 100
+          }
+        },
+        "next_transaction": {
+          "serial_diff": {
+            "buckets_path": "transactions_sequence>amount"
+          }
+        }
+      }
+    }
+  }
+}

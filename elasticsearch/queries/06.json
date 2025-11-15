@@ -1,0 +1,17 @@
+{
+  "size": 0,
+  "aggs": {
+    "by_branch": {
+      "terms": {
+        "field": "branch"
+      },
+      "aggs": {
+        "total_balance": {
+          "sum": {
+            "field": "balance"
+          }
+        }
+      }
+    }
+  }
+}

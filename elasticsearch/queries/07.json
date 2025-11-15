@@ -1,0 +1,10 @@
+{
+  "size": 0,
+  "aggs": {
+    "by_transaction_type": {
+      "terms": {
+        "field": "transaction_type"
+      }
+    }
+  }
+}

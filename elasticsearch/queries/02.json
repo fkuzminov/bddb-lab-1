@@ -1,0 +1,5 @@
+{
+  "query": {
+    "match": {"account_id": "35610801"}
+  }
+}

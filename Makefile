@@ -1,4 +1,4 @@
-.PHONY: run-pg stop-pg run-mongo stop-mongo run-neo4j stop-neo4j init-spark clean-spark
+.PHONY: run-pg stop-pg run-mongo stop-mongo run-neo4j stop-neo4j init-spark clean-spark run-elastic stop-elastic
 
 run-pg:
 	@echo "Stopping existing container if running..."
@@ -75,3 +75,25 @@ clean-spark:
 	@echo "Cleaning Spark data..."
 	@rm -rf spark/data spark/delta
 	@echo "Spark data cleaned."
+
+run-elastic:
+	@echo "Stopping existing container if running..."
+	@docker stop study_elastic 2>/dev/null || true
+	@echo "Starting Elasticsearch container..."
+	@cd elasticsearch && bash run.sh
+	@echo "Waiting for Elasticsearch to be ready..."
+	@sleep 10
+	@until curl -s -u elastic:password http://localhost:9200/_cluster/health > /dev/null 2>&1; do \
+		echo "Waiting for Elasticsearch..."; \
+		sleep 2; \
+	done
+	@echo "Elasticsearch is ready!"
+	@echo "Running data generation script..."
+	@cd elasticsearch && python3 init_db.py
+	@echo "Done! Elasticsearch is ready to use."
+	@echo "Elasticsearch: http://localhost:9200"
+
+stop-elastic:
+	@echo "Stopping Elasticsearch container..."
+	@docker stop study_elastic 2>/dev/null || true
+	@echo "Container stopped."

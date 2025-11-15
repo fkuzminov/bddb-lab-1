@@ -1,0 +1,17 @@
+{
+  "size": 0,
+  "aggs": {
+    "avg_balance_by_account_type": {
+      "terms": {
+        "field": "account_type"
+      },
+      "aggs": {
+        "average_balance": {
+          "avg": {
+            "field": "balance"
+          }
+        }
+      }
+    }
+  }
+}

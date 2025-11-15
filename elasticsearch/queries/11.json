@@ -1,0 +1,26 @@
+{
+  "size": 0,
+  "aggs": {
+    "clients_with_high_total_transactions": {
+      "terms": {
+        "field": "customer_id",
+        "size": 10
+      },
+      "aggs": {
+        "total_amount": {
+          "sum": {
+            "field": "amount"
+          }
+        },
+        "having_total_above_threshold": {
+          "bucket_selector": {
+            "buckets_path": {
+              "total": "total_amount"
+            },
+            "script": "params.total > 140000"
+          }
+        }
+      }
+    }
+  }
+}

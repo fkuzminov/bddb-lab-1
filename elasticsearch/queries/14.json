@@ -1,0 +1,20 @@
+{
+  "size": 0,
+  "aggs": {
+    "average_amount": {
+      "avg": {
+        "field": "amount"
+      }
+    }
+  },
+  "query": {
+    "script_score": {
+      "query": {
+        "match_all": {}
+      },
+      "script": {
+        "source": "params._source.amount"
+      }
+    }
+  }
+}

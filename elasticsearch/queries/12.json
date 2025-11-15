@@ -1,0 +1,11 @@
+{
+  "size": 0,
+  "aggs": {
+    "loan_status_distribution": {
+      "terms": {
+        "field": "loan_status",
+        "size": 10
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "range": {
+            "balance": {
+              "gt": 99000
+            }
+          }
+        }
+      ]
+    }
+  }}

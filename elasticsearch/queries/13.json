@@ -1,0 +1,38 @@
+{
+  "size": 0,
+  "aggs": {
+    "customers_by_transaction_sum": {
+      "terms": {
+        "field": "customer_id",
+        "size": 5,
+        "order": {
+          "total_amount": "desc"
+        }
+      },
+      "aggs": {
+        "total_amount": {
+          "sum": {
+            "field": "amount"
+          }
+        },
+        "customer_name": {
+          "top_hits": {
+            "size": 1,
+            "_source": ["customer_name"]
+          }
+        },
+        "rank_bucket": {
+          "bucket_sort": {
+            "sort": [
+              {
+                "total_amount": {
+                  "order": "desc"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
