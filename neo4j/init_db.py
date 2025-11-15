@@ -1,5 +1,7 @@
 import random
+
 from faker import Faker
+
 from neo4j import GraphDatabase
 
 fake = Faker("en_GB")

@@ -4,7 +4,6 @@ import random
 import faker
 import psycopg2
 
-
 Faker = faker.Faker("en_GB")
 
 

@@ -1,8 +1,9 @@
 import argparse
 import pathlib
 
-from neo4j import GraphDatabase, Driver
 from tabulate import tabulate
+
+from neo4j import Driver, GraphDatabase
 
 URI = "bolt://localhost:7687"
 AUTH = ("neo4j", "password")

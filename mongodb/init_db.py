@@ -1,10 +1,9 @@
 import os
 import random
-from datetime import datetime, timedelta, time
+from datetime import datetime, time, timedelta
 
 import faker
 from pymongo import MongoClient, database
-
 
 Faker = faker.Faker("en_GB")
 
