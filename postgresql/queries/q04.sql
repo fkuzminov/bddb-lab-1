@@ -3,4 +3,5 @@ SELECT c.course_name,
 FROM courses c
 JOIN teaching t ON c.id = t.course_id
 GROUP BY c.course_name
-HAVING COUNT(t.lecturer_id) > 1;
+HAVING COUNT(t.lecturer_id) > 1
+LIMIT 10;

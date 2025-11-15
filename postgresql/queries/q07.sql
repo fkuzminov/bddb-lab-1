@@ -3,3 +3,4 @@ SELECT l.full_name,
 FROM lecturers l
 LEFT JOIN teaching t ON t.lecturer_id = l.id
 GROUP BY l.full_name
+LIMIT 10;

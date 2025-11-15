@@ -3,4 +3,4 @@ SELECT f.faculty_name,
 FROM faculties f
 LEFT JOIN groups g ON f.id = g.faculty_id
 LEFT JOIN students s ON g.id = s.group_id
-GROUP BY f.faculty_name
+GROUP BY f.faculty_name;

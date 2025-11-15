@@ -4,4 +4,4 @@ SELECT
 FROM courses c
 LEFT JOIN enrollments e ON c.id = e.course_id
 GROUP BY c.course_name
-ORDER BY c.course_name;
+ORDER BY student_count DESC;
