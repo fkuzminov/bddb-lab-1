@@ -1,4 +1,4 @@
-.PHONY: run-pg stop-pg run-mongo stop-mongo run-neo4j stop-neo4j init-spark clean-spark run-elastic stop-elastic run-query
+.PHONY: run-pg stop-pg run-mongo stop-mongo run-neo4j stop-neo4j init-spark clean-spark run-es stop-es run-query
 
 run-pg:
 	@echo "Stopping existing container if running."
@@ -76,7 +76,7 @@ clean-spark:
 	@rm -rf spark/data spark/delta
 	@echo "Spark data cleaned."
 
-run-elastic:
+run-es:
 	@echo "Stopping existing container if running."
 	@docker stop study_elastic 2>/dev/null || true
 	@echo "Starting Elasticsearch container."
@@ -93,7 +93,7 @@ run-elastic:
 	@echo "Elasticsearch is ready to use."
 	@echo "Elasticsearch: http://localhost:9200"
 
-stop-elastic:
+stop-es:
 	@echo "Stopping Elasticsearch container."
 	@docker stop study_elastic 2>/dev/null || true
 	@echo "Container stopped."

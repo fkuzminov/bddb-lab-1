@@ -1,4 +1,5 @@
 docker run \
+  -d \
   --rm \
   --name study_elastic \
   -p 9200:9200 \
