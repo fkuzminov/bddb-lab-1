@@ -56,7 +56,6 @@ def create_categories(db: database.Database) -> dict[str, str]:
             result = categories_collection.insert_one(sub_cat_doc)
             category_ids[subcategory] = result.inserted_id
 
-    print(f"Created {len(category_ids)} categories and subcategories.")
     return category_ids
 
 
@@ -71,7 +70,6 @@ def create_suppliers(db: database.Database) -> list[str]:
         }
         result = suppliers_collection.insert_one(supplier_doc)
         supplier_ids.append(result.inserted_id)
-    print(f"Created {len(supplier_ids)} suppliers.")
     return supplier_ids
 
 
@@ -90,7 +88,6 @@ def create_products(db: database.Database, category_ids: dict[str, str]) -> dict
         }
         result = products_collection.insert_one(product_doc)
         product_ids[result.inserted_id] = price
-    print(f"Created {len(product_ids)} products.")
     return product_ids
 
 
@@ -105,7 +102,6 @@ def create_product_suppliers(db: database.Database, product_ids: dict[str, float
                 {"supplier_id": supplier_id, "product_id": product_id}
             )
             cnt += 1
-    print(f"Created {cnt} product-supplier relationships.")
 
 
 def create_customers(db: database.Database) -> list[str]:
@@ -123,7 +119,6 @@ def create_customers(db: database.Database) -> list[str]:
         }
         result = customers_collection.insert_one(customer_doc)
         customer_ids.append(result.inserted_id)
-    print(f"Created {len(customer_ids)} customers.")
     return customer_ids
 
 
@@ -162,7 +157,6 @@ def create_orders_and_items(db: database.Database, customer_ids: list, product_i
             {"_id": order_id},
             {"$set": {"total_amount": round(total_amount, 2)}}
         )
-    print(f"Created {len(order_ids)} orders with {orders} items.")
     return order_ids
 
 
