@@ -1,4 +1,4 @@
-.PHONY: run-pg stop-pg run-mongo stop-mongo run-neo4j stop-neo4j init-spark clean-spark run-elastic stop-elastic
+.PHONY: run-pg stop-pg run-mongo stop-mongo run-neo4j stop-neo4j init-spark clean-spark run-elastic stop-elastic run-query
 
 run-pg:
 	@echo "Stopping existing container if running."
@@ -97,3 +97,36 @@ stop-elastic:
 	@echo "Stopping Elasticsearch container."
 	@docker stop study_elastic 2>/dev/null || true
 	@echo "Container stopped."
+
+run-query:
+ifndef db
+	@echo "Error: db parameter is required"
+	@echo "Usage: make run-query db=<pg|mongo|neo4j|spark|es> file=<number>"
+	@echo "Examples:"
+	@echo "  make run-query db=pg file=01"
+	@echo "  make run-query db=mongo file=01"
+	@echo "  make run-query db=neo4j file=01"
+	@echo "  make run-query db=spark file=01"
+	@echo "  make run-query db=es file=01"
+	@exit 1
+endif
+ifndef file
+	@echo "Error: file parameter is required"
+	@echo "Usage: make run-query db=<pg|mongo|neo4j|spark|es> file=<number>"
+	@exit 1
+endif
+ifeq ($(db),pg)
+	@cd postgresql && python3 run_query.py --file $(file)
+else ifeq ($(db),mongo)
+	@cd mongodb && python3 run_query.py --file $(file)
+else ifeq ($(db),neo4j)
+	@cd neo4j && python3 run_query.py --file $(file)
+else ifeq ($(db),spark)
+	@cd spark && python3 run_query.py --file $(file)
+else ifeq ($(db),es)
+	@cd elasticsearch && python3 run_query.py --file $(file)
+else
+	@echo "Error: Unknown database '$(db)'"
+	@echo "Supported databases: pg, mongo, neo4j, spark, es"
+	@exit 1
+endif
