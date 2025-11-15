@@ -101,19 +101,19 @@ stop-es:
 run-query:
 ifndef db
 	@echo "Error: db parameter is required"
-	@echo "Usage: make run-query db=<pg|mongo|neo4j|spark|es> file=<number>"
+	@echo "Usage: make run-query db=<pg|mongo|neo|spark|es> file=<number>"
 	@exit 1
 endif
 ifndef file
 	@echo "Error: file parameter is required"
-	@echo "Usage: make run-query db=<pg|mongo|neo4j|spark|es> file=<number>"
+	@echo "Usage: make run-query db=<pg|mongo|neo|spark|es> file=<number>"
 	@exit 1
 endif
 ifeq ($(db),pg)
 	@cd postgresql && python3 run_query.py --file $(file)
 else ifeq ($(db),mongo)
 	@cd mongodb && python3 run_query.py --file $(file)
-else ifeq ($(db),neo4j)
+else ifeq ($(db),neo)
 	@cd neo4j && python3 run_query.py --file $(file)
 else ifeq ($(db),spark)
 	@cd spark && python3 run_query.py --file $(file)
