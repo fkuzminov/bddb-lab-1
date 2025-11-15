@@ -102,12 +102,6 @@ run-query:
 ifndef db
 	@echo "Error: db parameter is required"
 	@echo "Usage: make run-query db=<pg|mongo|neo4j|spark|es> file=<number>"
-	@echo "Examples:"
-	@echo "  make run-query db=pg file=01"
-	@echo "  make run-query db=mongo file=01"
-	@echo "  make run-query db=neo4j file=01"
-	@echo "  make run-query db=spark file=01"
-	@echo "  make run-query db=es file=01"
 	@exit 1
 endif
 ifndef file
