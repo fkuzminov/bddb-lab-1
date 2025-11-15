@@ -1,2 +1,3 @@
 SELECT full_name, city
-FROM customers;
+FROM customers
+LIMIT 10;
