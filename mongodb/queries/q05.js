@@ -1,5 +1,3 @@
-// Получить список категорий и количество товаров в каждой из них.
-
 db.categories.aggregate([
     { $match: { "parent_id": { $ne: null } } },
     {

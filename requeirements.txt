@@ -3,3 +3,9 @@ Faker==37.12.0
 
 # PostgreSQL
 psycopg2==2.9.11
+
+# mongoDB
+pymongo==4.15.4
+
+# neo4j
+neo4j==6.0.3
