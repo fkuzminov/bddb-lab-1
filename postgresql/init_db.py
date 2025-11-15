@@ -163,7 +163,7 @@ def create_lecturers_and_teachings(c: psycopg2.extensions.cursor, courses: dict[
             )
 
 
-if __name__ == "__main__":
+def main() -> None:
     conn = psycopg2.connect(dsn=get_dns())
     cursor = conn.cursor()
     courses, groups = create_faculties_and_groups_and_courses(cursor)
@@ -175,3 +175,7 @@ if __name__ == "__main__":
     create_lecturers_and_teachings(cursor, courses)
     conn.commit()
     conn.close()
+
+
+if __name__ == "__main__":
+    main()
