@@ -17,7 +17,7 @@
             "buckets_path": {
               "total": "total_amount"
             },
-            "script": "params.total > 140000"
+            "script": "params.total > 100000"
           }
         }
       }

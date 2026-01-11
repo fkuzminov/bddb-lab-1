@@ -5,5 +5,5 @@ FROM customers c
 JOIN accounts a ON c.id = a.customer_id
 JOIN transactions t ON a.id = t.account_id
 GROUP BY c.id, c.full_name, c.city
-HAVING c.city = 'Vohenstrauß'
+HAVING c.city = 'Tecklenburg'
 ORDER BY city_rank;

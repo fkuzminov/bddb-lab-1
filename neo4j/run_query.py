@@ -10,16 +10,22 @@ AUTH = ("neo4j", "password")
 
 QUERIES = pathlib.Path(__file__).parent.resolve().joinpath("queries")
 
-def run_query(driver: Driver, cypher_file: str) -> None:
+def run_query(driver: Driver, cypher_file: str, explain: bool = False) -> None:
 
     with open(QUERIES.joinpath(f"{cypher_file}.cypher"), "r", encoding="utf-8") as f:
         query = f.read().strip()
 
     with driver.session() as session:
-        result = session.run(query)
+        if explain:
+            result = session.run(f"PROFILE {query}")
+        else:
+            result = session.run(query)
+
         records = list(result)
 
         if not records:
+            print(f"Executing query from: {cypher_file}\n")
+            print("No results returned.\n")
             return
 
         headers = records[0].keys()
@@ -29,14 +35,23 @@ def run_query(driver: Driver, cypher_file: str) -> None:
         print(tabulate(rows, headers=headers, tablefmt="pretty", numalign="right", stralign="left"))
         print(f"{len(rows)} rows returned.\n")
 
+        if explain:
+            summary = result.consume()
+            print("=" * 60)
+            print("PROFILE:\n")
+            print(summary.profile)
+            print(f"\nDB Hits: {summary.profile['dbHits']}")
+            print(f"Rows: {summary.profile['rows']}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Run Cypher query from file")
     parser.add_argument("--file", required=True, help="Path to .cypher file (e.g. 01)")
+    parser.add_argument("--explain", action="store_true", help="Run PROFILE on the query")
     args = parser.parse_args()
 
     driver = GraphDatabase.driver(URI, auth=AUTH)
-    run_query(driver, args.file)
+    run_query(driver, args.file, args.explain)
     driver.close()
 
 

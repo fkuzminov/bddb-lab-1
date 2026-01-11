@@ -21,6 +21,7 @@ def get_dns() -> str:
 def main():
     parser = argparse.ArgumentParser(description="Run PostgreSQL query from file")
     parser.add_argument("--file", required=True, help="Query file name (e.g., 01)")
+    parser.add_argument("--explain", action="store_true", help="Run EXPLAIN ANALYZE on the query")
     args = parser.parse_args()
 
     query_file = QUERIES.joinpath(f"q{args.file}.sql")
@@ -42,6 +43,14 @@ def main():
         print(f"\n{len(results)} rows returned.\n")
     else:
         print("No results returned.\n")
+
+    if args.explain:
+        print("=" * 60)
+        print("EXPLAIN ANALYZE:\n")
+        cursor.execute(f"EXPLAIN ANALYZE {query}")
+        explain_results = cursor.fetchall()
+        for row in explain_results:
+            print(row[0])
 
     cursor.close()
     conn.close()

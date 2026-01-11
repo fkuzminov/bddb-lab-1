@@ -10,7 +10,7 @@ delta_path = pathlib.Path(__file__).parent.resolve().joinpath("delta")
 TABLES = ["customers", "accounts", "branches", "transactions", "loans", "employees"]
 
 
-def main(sql_file: str) -> None:
+def main(sql_file: str, explain: bool = False) -> None:
     sql_file_path = queries_path.joinpath(sql_file)
     with open(f"{sql_file_path}.sql", "r") as f:
         query = f.read().strip()
@@ -33,6 +33,10 @@ def main(sql_file: str) -> None:
     result = spark.sql(query)
 
     result.show(truncate=False)
+    if explain:
+        print("\n" + "=" * 60)
+        print("EXPLAIN EXTENDED:\n")
+        result.explain(extended=True)
 
     spark.stop()
 
@@ -40,5 +44,6 @@ def main(sql_file: str) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--file", required=True, help="Path to SQL file (e.g. 01)")
+    parser.add_argument("--explain", action="store_true", help="Show EXPLAIN plan instead of results")
     args = parser.parse_args()
-    main(args.file)
+    main(args.file, args.explain)

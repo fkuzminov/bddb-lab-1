@@ -101,26 +101,24 @@ stop-es:
 run-q:
 ifndef db
 	@echo "Error: db parameter is required"
-	@echo "Usage: make run-q db=<pg|mongo|neo|spark|es> file=<number>"
+	@echo "Usage: make run-q db=<pg|neo|spark|es> file=<number>"
 	@exit 1
 endif
 ifndef file
 	@echo "Error: file parameter is required"
-	@echo "Usage: make run-q db=<pg|mongo|neo|spark|es> file=<number>"
+	@echo "Usage: make run-q db=<pg|neo|spark|es> file=<number>"
 	@exit 1
 endif
 ifeq ($(db),pg)
-	@cd postgresql && python3 run_query.py --file $(file)
-else ifeq ($(db),mongo)
-	@cd mongodb && python3 run_query.py --file $(file)
+	@cd postgresql && python3 run_query.py --file $(file) $(if $(explain),--explain)
 else ifeq ($(db),neo)
-	@cd neo4j && python3 run_query.py --file $(file)
+	@cd neo4j && python3 run_query.py --file $(file) $(if $(explain),--explain)
 else ifeq ($(db),spark)
-	@cd spark && python3 run_query.py --file $(file)
+	@cd spark && python3 run_query.py --file $(file) $(if $(explain),--explain)
 else ifeq ($(db),es)
-	@cd elasticsearch && python3 run_query.py --file $(file)
+	@cd elasticsearch && python3 run_query.py --file $(file) $(if $(explain),--explain)
 else
 	@echo "Error: Unknown database '$(db)'"
-	@echo "Supported databases: pg, mongo, neo, spark, es"
+	@echo "Supported databases: pg, neo, spark, es"
 	@exit 1
 endif
