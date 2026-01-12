@@ -1,5 +1,4 @@
 {
-  "size": 0,
   "aggs": {
     "average_amount": {
       "avg": {

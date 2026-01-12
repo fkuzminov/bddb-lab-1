@@ -20,17 +20,6 @@
             "size": 1,
             "_source": ["customer_name"]
           }
-        },
-        "rank_bucket": {
-          "bucket_sort": {
-            "sort": [
-              {
-                "total_amount": {
-                  "order": "desc"
-                }
-              }
-            ]
-          }
         }
       }
     }

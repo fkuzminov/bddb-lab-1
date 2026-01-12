@@ -14,7 +14,6 @@ db.orders.aggregate([
     }
   },
   { $unwind: "$customer" },
-  // если добавишь customers.country
   {
     $setWindowFields: {
       partitionBy: "$customer.country",

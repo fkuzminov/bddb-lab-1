@@ -9,7 +9,7 @@ db.suppliers.aggregate([
     },
     {
         $project: {
-            _id: 1,
+            _id: 0,
             name: 1,
             product_count: { $size: "$products" }
         }
